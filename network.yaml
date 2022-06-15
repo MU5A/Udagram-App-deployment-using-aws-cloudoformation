@@ -1,5 +1,5 @@
 Description: >
-  Bashir Musa / Udacity project .
+  Bashir Musa / Udacity project 2
 Parameters:
   ProjectName:
     Type: String
