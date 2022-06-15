@@ -1,21 +1,10 @@
 Description: >
-  Micah Shallom Bawa
-  Project 3 Server Stack
-  Deploying A High Availability Web Application For an Instagram-Like Application "Udagram"
-  ---
+  Bashir Musa / Udacity Project
 Parameters:
   ProjectName:
     Type: String
-  # AMItoUse:
-  #   Type: String
 
-  # LatestAmiId:
-  #   Description: Region specific image from the Parameter Store
-  #   Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-  #   Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
-##############################################################################################
 Resources:
-#IAmRolesandPolicy
   UdacityS3ReadOnlyEC2Role:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -29,18 +18,6 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: /
-      # Policies:
-      #   - PolicyName: AmazonS3ReadOnlyAccess
-      #     PolicyDocument:
-      #       Version: "2012-10-17"
-      #       Statement:
-      #         - Effect: Allow
-      #           Action: 
-      #           - s3:Get*
-      #           - s3:List*
-      #           - s3-object-lambda:Get*
-      #           - s3-object-lambda:List*
-      #           Resource: '*'
   S3Policy:
     Type: AWS::IAM::Policy
     Properties:
@@ -65,8 +42,6 @@ Resources:
         Path: "/"
         Roles:
         - !Ref UdacityS3ReadOnlyEC2Role
-#######################################################################################
-#Security Groups
   LBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -105,15 +80,13 @@ Resources:
           FromPort: 0
           ToPort: 65535
           CidrIp: 0.0.0.0/0
-######################################################################################
-#AutoScaling
+
   WebLaunchConfig: 
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       ImageId: ami-09d56f8956ab235b3
       InstanceType: t2.medium
       IamInstanceProfile: !Ref ProfileWithRolesForOurApp
-      # KeyName: #############
       UserData: 
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -143,8 +116,7 @@ Resources:
           !Sub "${ProjectName}-PRIV-SUBNET1"
       - Fn::ImportValue:
           !Sub "${ProjectName}-PRIV-SUBNET2"
-######################################################################################
-#Load Balancers
+
   WebLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties: 
@@ -211,8 +183,8 @@ Resources:
       ComparisonOperator: GreaterThanThreshold
       Threshold: 0
       EvaluationPeriods: 1
-#########################################################################
-#Creating JumpBox Instance
+
+
   JumpBoxSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -228,7 +200,6 @@ Resources:
   JumpBoxServer:
     Type: AWS::EC2::Instance
     Properties: 
-      # InstanceType: m1.small
       ImageId: "ami-09d56f8956ab235b3"
       KeyName: "jumpboxkey"
       NetworkInterfaces: 

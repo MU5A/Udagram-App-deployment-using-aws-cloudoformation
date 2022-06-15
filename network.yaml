@@ -1,8 +1,5 @@
 Description: >
-  Micah Shallom Bawa
-  Project 3 Network Stack
-  Deploying A High Availability Web Application For an Instagram-Like Application "Udagram"
-##########################################################################################
+  Bashir Musa / Udacity project
 Parameters:
   ProjectName:
     Type: String
@@ -38,7 +35,7 @@ Resources:
       Tags:
       - Key: Name
         Value: !Sub ${ProjectName} VPC
-#########################################################################################
+
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -83,7 +80,7 @@ Resources:
       Tags:
       - Key: Name
         Value: Private Subnet present in AZ2
-##########################################################################################
+
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
@@ -132,9 +129,8 @@ Resources:
       - Key: Name
         Value: !Sub ${ProjectName} NAT 2
 
-##########################################################################################
 
-#Public Subnet Routing
+
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -163,7 +159,7 @@ Resources:
       SubnetId: !Ref PublicSubnet2
       RouteTableId: !Ref PublicRouteTable
 
-#Private Subnet 1 Routing
+
   PrivateRouteTable1:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -187,7 +183,7 @@ Resources:
       SubnetId: !Ref PrivateSubnet1
       RouteTableId: !Ref PrivateRouteTable1
       
-#Private Subnet 2 Routing
+
   PrivateRouteTable2:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -210,7 +206,7 @@ Resources:
     Properties:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable2
-##############################################################################################
+
 Outputs:
   VPC:
     Description: The ID of the VPC
