@@ -79,10 +79,7 @@ Resources:
           cd /var/www/html
           echo "“It works! Udagram, Udacity!" > index.html
 
-      # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
       ImageId: ami-0747bdcabd34c712a
-      # ToDo: Change the key-pair name, as applicable to you. 
-      # KeyName: nd9990_keypair
       SecurityGroups:
       - Ref: WebServerSecGroup
       InstanceType: t3.medium
@@ -150,12 +147,10 @@ Resources:
 
 Outputs:
 
-# output for the load balancer details
   LoadBalancer:
       Description: A reference to the Application Load Balancer
       Value: !Ref WebAppLB
 
-  # output for load balancer URL
   LoadBalancerUrl:
       Description: The URL of the ALB
       Value: !Join [ "", [ "http://", !GetAtt WebAppLB.DNSName ] ]
